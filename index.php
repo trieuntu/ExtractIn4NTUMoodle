@@ -261,7 +261,7 @@
                 <!-- Excel Upload -->
                 <div class="form-group">
                     <label class="form-label">
-                        <i class="fas fa-file-excel"></i>File Excel Gốc
+                        <i class="fas fa-file-excel"></i>File Excel SV (Xuất Excel danh sách sinh viên dự thi từ qldt)
                     </label>
                     <div class="file-input-wrapper">
                         <label class="file-input-label" for="excelInput">
@@ -279,7 +279,7 @@
                 <!-- HTML Files Upload -->
                 <div class="form-group">
                     <label class="form-label">
-                        <i class="fas fa-file-code"></i>Tệp HTML Moodle
+                        <i class="fas fa-file-code"></i>Tệp HTML Moodle (Status: submitted của Assignment)
                     </label>
                     <div class="file-input-wrapper">
                         <label class="file-input-label" for="htmlfilesInput">
@@ -289,7 +289,7 @@
                         <input type="file" id="htmlfilesInput" name="htmlfiles[]" accept=".html,.htm" multiple required>
                     </div>
                     <p class="form-hint">
-                        <i class="fas fa-info-circle mr-1"></i>Mỗi file HTML tạo một cột điểm (10 hoặc 0) trong kết quả
+                        <i class="fas fa-info-circle mr-1"></i>Mỗi file HTML tạo một cột điểm (10 hoặc 0) tương ứng. Lưu ý, phân trang chọn Show All.
                     </p>
 
                     <!-- File list -->
