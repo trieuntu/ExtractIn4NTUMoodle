@@ -30,6 +30,23 @@ if ($validHtmlCount === 0) {
 $excelPath = $_FILES['excel']['tmp_name'];
 $htmlFiles = $_FILES['htmlfiles'];
 
+// Helper: find header row containing specific label
+function findHeaderRow($sheet, $label, $maxRows = 20) {
+    $highestColumn = $sheet->getHighestColumn();
+    $highestIndex = Coordinate::columnIndexFromString($highestColumn);
+    
+    for ($row = 1; $row <= $maxRows; $row++) {
+        for ($col = 1; $col <= $highestIndex; $col++) {
+            $cell = Coordinate::stringFromColumnIndex($col) . $row;
+            $value = trim((string) $sheet->getCell($cell)->getValue());
+            if (strcasecmp($value, $label) === 0) {
+                return $row;
+            }
+        }
+    }
+    return null;
+}
+
 // Helper: find column index by header label (case-insensitive match)
 function findColumnIndex($sheet, $headerRow, $label) {
     $highestColumn = $sheet->getHighestColumn();
@@ -69,7 +86,13 @@ foreach ($sheet->getColumnDimensions() as $colLetter => $dimension) {
 }
 $baseColCount = Coordinate::columnIndexFromString($sheet->getHighestColumn());
 
-$headerRow = 8; // Mã SV header row
+// Auto-detect header row by searching for "Mã SV" (for .xlsx compatibility)
+$headerRow = findHeaderRow($sheet, 'Mã SV', 20);
+if ($headerRow === null) {
+    // Fallback to row 8 for legacy .xls files
+    $headerRow = 8;
+}
+
 $masvCol = findColumnIndex($sheet, $headerRow, 'Mã SV');
 if ($masvCol === null) {
     die('Không tìm thấy cột "Mã SV" ở dòng tiêu đề.');
