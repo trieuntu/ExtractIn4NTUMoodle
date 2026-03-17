@@ -113,7 +113,7 @@ foreach ($htmlFiles['tmp_name'] as $idx => $tmpHtmlPath) {
     $sheet->setCellValue($headerCell, $colTitle);
 
     $usernames = extractUsernamesFromHtml($tmpHtmlPath);
-    $userLookup = array_flip($usernames);
+    $userLookup = array_flip(array_map('strtolower', $usernames));
 
     for ($row = $headerRow + 1; $row <= $highestDataRow; $row++) {
         $studentCell = Coordinate::stringFromColumnIndex($masvCol) . $row;
@@ -121,7 +121,7 @@ foreach ($htmlFiles['tmp_name'] as $idx => $tmpHtmlPath) {
         if ($studentCode === '') {
             continue;
         }
-        $score = isset($userLookup[$studentCode]) ? 10 : 0;
+        $score = isset($userLookup[strtolower($studentCode)]) ? 10 : 0;
         $scoreCell = Coordinate::stringFromColumnIndex($currentColIndex) . $row;
         $sheet->setCellValue($scoreCell, $score);
     }
